@@ -7774,7 +7774,7 @@ Name: guesses, dtype: object</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>Below we calculate the percent of words that contain each letter in the alphabet and display the top and bottom ten most frequently used letters. Not surprisingly, Q, X, J, Z, and V are among the least likely to appear in a word.</p>
+<p>Below we calculate the percent of words that contain each letter in the alphabet and display the top and bottom ten most frequently used letters. The most commonly used letters include vowels and the consonants S, L, R, T, and N. And, not surprisingly, Q, X, J, Z, and V are among the least likely to appear in a word.</p>
 </div>
 </div>
 </div>
@@ -7860,7 +7860,7 @@ Q       0.01
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>I was also curious if attempts where the first guess contained a duplicate letter (e.g. BOOTH, PROMO) were less likely to be solved. It's not a huge different, but we were about 1.5% less likely to solve the puzzle when the initial guess contained a duplicate letter.</p>
+<p>I was also curious if attempts where the first guess contained a duplicate letter (e.g. BOOTH, PROMO) were less likely to be solved. It's not a huge difference, but we were about 1.5% less likely to solve the puzzle when the initial guess contained a duplicate letter.</p>
 </div>
 </div>
 </div>
@@ -8154,7 +8154,7 @@ Q       0.01
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p>We can then insert the letter frequency function into the Wordle solver. Now, during subsequent guesses, we will first filter out words that do not contain the most frequently used letter within our word pool. Then, we recalculate the letter frequency for the new word pool and filter out any words that contain the least frequently used letter. In both cases, the frequency has to be between 1 and 0. That is, we aren't going to rule out words containing a letter with a frequency of 0 - because those words have already been ruled out.</p>
+<p>We can then insert the letter frequency function into the Wordle solver. Now, during subsequent guesses, we will first filter out words that do not contain the most frequently used letter within our word pool. Then, we recalculate the letter frequency for the new word pool and filter out any words that contain the least frequently used letter. In both cases, the frequency has to be between 1 and 0. For example, we aren't going to rule out words containing a letter with a frequency of 0 - because those words have already been ruled out.</p>
 </div>
 </div>
 </div>
@@ -8555,7 +8555,7 @@ Q       0.01
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Wordle-Solver-v3-">Wordle Solver v3 <a class="anchor" id="fourth-bullet"></a><a class="anchor-link" href="#Wordle-Solver-v3-">¶</a></h2><p>I did some research and decided to use entropy to guide the guessing logic, rather the focusing on letters most or least likely to appear. There are better explanations of entropy on the web, but basically this process calculates the information gained from each potential guess. In this case, it works by calculating the number and frequency of unique outcomes (i.e. Wordle feedback patterns) that you could get from guessing a particular word given the all of the potential solutions. By selecting the word with the greatest entropy, you can winnow the field much faster. Or put another way, you are trying to eliminate as many solutions as possible rather than attempting to guess the correct answer.</p>
+<h2 id="Wordle-Solver-v3-">Wordle Solver v3 <a class="anchor" id="fourth-bullet"></a><a class="anchor-link" href="#Wordle-Solver-v3-">¶</a></h2><p>I did some research and decided to use entropy to guide the guessing logic, rather the focusing on letters most or least likely to appear. There are better explanations of entropy on the web, but basically this process calculates the information gained from each potential guess. In this case, it works by calculating the number and frequency of unique outcomes (i.e. Wordle feedback patterns) that you could get from guessing a particular word given the all of the potential solutions. By selecting the word with the greatest entropy, you can winnow the field much faster. Or put another way, you are trying to eliminate as many solutions as possible rather than attempting to guess the single correct answer.</p>
 <p>Below is our entropy function, which takes two arguments: a word and a list of words. The function compares the word to each word in the word pool to determine the Wordle feedback pattern and stores the pattern in a list. Then we loop over the unique patterns and calculate its frequency (i.e. number of times that pattern appears/total number of patterns) and using a summation function, calculates the word's entropy.*</p>
 <p>*It's really easy to understand how maximizing entropy improves performance when you break down this formula. Entropy is higher when (a) there are more unique feedback patterns and/or (b) the distribution of pattern frequencies is more uniform. Meaning the ideal word to guess is one that fractures the possible solutions into several, equally sized bins. This should help avoid guessing a word that could lead to a situation where all but one letter is solved, but the remaining letter could have several potential values (e.g. S_OOP - SCOOP, SWOOP, STOOP, etc.).</p>
 </div>
